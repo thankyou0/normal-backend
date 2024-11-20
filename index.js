@@ -4,14 +4,6 @@
 import express from 'express';
 import serverless from 'serverless-http';
 const app = express();
-const router = express.Router();
-router.get('/', (req, res) => {
-  res.send('App is running..');
-});
-
-
-
-
 
 
 import mongoose from 'mongoose';
@@ -62,11 +54,11 @@ app.use(cors({
   credentials: true,
 }));
 
-// router.use((req, res, next) => {
-//   res.header('Access-Control-Allow-Origin', '*');
-//   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-//   next();
-// });
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  next();
+});
 
 
 app.get("/api/checkauth", checkAuth);
