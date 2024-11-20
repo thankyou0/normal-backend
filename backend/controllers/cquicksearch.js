@@ -92,10 +92,10 @@ const deleteQuickSearch = async (req, res) => {
       return res.status(210).json({ success: false, message: "User ID is required." });
     }
 
-    const { quickSearchTextFromFrontend } = req.body;
+    const { quickSearchText } = req.body;
 
     // Validate quickSearchTextFromFrontend
-    if (!quickSearchTextFromFrontend) {
+    if (!quickSearchText) {
       return res.status(210).json({ success: false, message: "Quick Search Text is required." });
     }
 
@@ -111,7 +111,7 @@ const deleteQuickSearch = async (req, res) => {
 
     // Filter out the quick search text to be deleted
     const updatedQuickSearchText = quickSearchUser.quickSearchText.filter(
-      (text) => text !== quickSearchTextFromFrontend
+      (text) => text !== quickSearchText
     );
 
     // Check if the quick search text existed in the user's list
@@ -128,7 +128,6 @@ const deleteQuickSearch = async (req, res) => {
     // Save the updated record
     await quickSearchUser.save();
 
-    
     return res
       .status(202)
       .json({ success: true, message: "Quick Search deleted successfully." });
@@ -137,6 +136,7 @@ const deleteQuickSearch = async (req, res) => {
     return res.status(210).json({ success: false, message: error.message });
   }
 };
+
 
 
 
