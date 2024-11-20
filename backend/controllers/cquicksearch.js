@@ -84,59 +84,39 @@ const addQuickSearch = async (req, res) => {
 
 
 const deleteQuickSearch = async (req, res) => {
+  console.log("deleteQuickSearch");
   try {
-    const user_id = req.user.id; // Extract user ID from the request (e.g., via middleware)
 
-    // Validate the user_id
+    const user_id = req.user.id;
+
     if (!user_id) {
-      return res.status(210).json({ success: false, message: "User ID is required." });
+      return res.status(210).json({ success: false, message: "User id is required" });
     }
 
     const { quickSearchText } = req.body;
+    console.log(quickSearchText);
 
-    // Validate quickSearchTextFromFrontend
     if (!quickSearchText) {
-      return res.status(210).json({ success: false, message: "Quick Search Text is required." });
+      return res.status(210).json({ success: false, message: "Quick Search Text is required" });
     }
 
-    // Find the user's quick search record
     const quickSearchUser = await quickSearch_model.findOne({ user_id });
 
     if (!quickSearchUser) {
-      // If no record exists, return an error response
-      return res
-        .status(210)
-        .json({ success: false, message: "No quick search found for the user." });
+      return res.status(210).json({ success: false, message: "No quick search found for the user" });
     }
 
-    // Filter out the quick search text to be deleted
-    const updatedQuickSearchText = quickSearchUser.quickSearchText.filter(
-      (text) => text !== quickSearchText
-    );
 
-    // Check if the quick search text existed in the user's list
-    if (updatedQuickSearchText.length === quickSearchUser.quickSearchText.length) {
-      return res.status(210).json({
-        success: false,
-        message: "The specified quick search text was not found.",
-      });
-    }
-
-    // Update the quick search text array
-    quickSearchUser.quickSearchText = updatedQuickSearchText;
-
-    // Save the updated record
+    quickSearchUser.quickSearchText = quickSearchUser.quickSearchText.filter((quickSearch) => quickSearch.text !== quickSearchText);
+    console.log(quickSearchUser.quickSearchText);
     await quickSearchUser.save();
 
-    return res
-      .status(202)
-      .json({ success: true, message: "Quick Search deleted successfully." });
-  } catch (error) {
-    // Catch any errors and return a response
-    return res.status(210).json({ success: false, message: error.message });
-  }
-};
+    res.status(202).json({ success: true, message: "Quick Search deleted successfully" });
 
+  } catch (error) {
+    res.status(210).json({ message: error.message });
+  }
+}
 
 
 
