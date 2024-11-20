@@ -128,6 +128,7 @@ const deleteQuickSearch = async (req, res) => {
     // Save the updated record
     await quickSearchUser.save();
 
+    
     return res
       .status(202)
       .json({ success: true, message: "Quick Search deleted successfully." });
