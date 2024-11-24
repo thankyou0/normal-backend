@@ -2,8 +2,8 @@
 import puppeteer from "puppeteer-core";
 import chromium from "@sparticuz/chromium";
 // import randomUseragent from "random-useragent";
-import {top_stories_model} from "../models/mtopStories.js";
-import {newsProvidermodel} from "../models/mnewsProvider.js";
+import { top_stories_model } from "../models/mtopStories.js";
+import { newsProvidermodel } from "../models/mnewsProvider.js";
 
 // const puppeteer = require("puppeteer");
 // const randomUseragent = require("random-useragent"); // Added random-useragent
@@ -70,6 +70,7 @@ const Scrap = async (searchby) => {
 
 		const url = `https://news.google.com/topics/CAAqKggKIiRDQkFTRlFvSUwyMHZNRFZxYUdjU0JXVnVMVWRDR2dKSlRpZ0FQAQ?hl=en-${country}&gl=${country}&ceid=${country}%3Aen`;
 		// const url = `https://www.google.com/search?q=dhoni&tbm=nws`;
+		console.log(url);
 		await page.goto(url, { waitUntil: "networkidle2" });
 		// await page.waitForTimeout(2000);
 
@@ -82,7 +83,7 @@ const Scrap = async (searchby) => {
 		setTimeout(() => {
 		}, 0);
 
-		return articles; yy
+		return articles;
 	}
 	catch (err) {
 		return "An error occurred while Scraping top stories data.";
