@@ -114,7 +114,8 @@ const ScrapTop_stories = async (req, res) => {
 	if (currentTime - lastFetchTime > FETCH_INTERVAL || Documentcount < 30) {
 
 
-		const articles = await Scrap({
+		let articles = [];
+		articles = await Scrap({
 			country: "IN",
 		});
 
@@ -142,7 +143,7 @@ const ScrapTop_stories = async (req, res) => {
 
 			// await newsProvidermodel.deleteMany({});
 
-			articles.forEach(async (article) => {
+			articles?.forEach(async (article) => {
 				const url = new URL(article.providerImg);
 				const params = new URLSearchParams(url.search);
 				const baseUrl = params.get('url');
