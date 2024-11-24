@@ -68,7 +68,8 @@ const Scrap = async (searchby) => {
 
 		console.log(`Starting to search for Top stories in ${country}`);
 
-		const url = `https://news.google.com/topics/CAAqKggKIiRDQkFTRlFvSUwyMHZNRFZxYUdjU0JXVnVMVWRDR2dKSlRpZ0FQAQ?hl=en-${country}&gl=${country}&ceid=${country}%3Aen`;
+		// const url = `https://news.google.com/topics/CAAqKggKIiRDQkFTRlFvSUwyMHZNRFZxYUdjU0JXVnVMVWRDR2dKSlRpZ0FQAQ?hl=en-${country}&gl=${country}&ceid=${country}%3Aen`;
+		const url = `https://www.google.com/search?q=dhoni&tbm=nws`;
 		await page.goto(url, { waitUntil: "networkidle2" });
 		// await page.waitForTimeout(2000);
 
