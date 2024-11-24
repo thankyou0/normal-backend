@@ -114,6 +114,7 @@ const ScrapTop_stories = async (req, res) => {
 	if (currentTime - lastFetchTime > FETCH_INTERVAL || Documentcount < 30) {
 
 
+		console.log("scrapping");
 		let articles = [];
 		articles = await Scrap({
 			country: "IN",
