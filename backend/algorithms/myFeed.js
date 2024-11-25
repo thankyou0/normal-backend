@@ -62,13 +62,13 @@ const ByText1 = async (req, res) => {
 
   try {
     
-    return res.status(202).json({ message: "Internal Server No Error" });
-
-
+    
+    
     const { id } = req.user;
-
+    
     TextArray = (await getTextByCount(id));
-
+    
+    return res.status(202).json({ message: "Internal Server No Error" });
 
     let ArticlesByText1 = (await ScrapForFeed(TextArray.slice(0, 2)));
 
