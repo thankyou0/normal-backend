@@ -68,9 +68,9 @@ const ByText1 = async (req, res) => {
     
     TextArray = (await getTextByCount(id));
     
-    return res.status(202).json({ message: "Internal Server No Error" });
+    // return res.status(202).json({ message: "Internal Server No Error" });
 
-    // let ArticlesByText1 = (await ScrapForFeed(TextArray.slice(0, 2)));
+    let ArticlesByText1 = (await ScrapForFeed(TextArray.slice(0, 2)));
 
 
     return res.status(202).json({ success: true, partialArticles: ArticlesByText1 });
