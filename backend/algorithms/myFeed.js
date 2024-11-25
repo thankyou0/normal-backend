@@ -70,7 +70,7 @@ const ByText1 = async (req, res) => {
     
     // return res.status(202).json({ message: "Internal Server No Error" });
 
-    let ArticlesByText1 = await ScrapForFeed(['dhoni','kohli']);
+    let ArticlesByText1 = await ScrapForFeed(['dhoni']);
 
 
     return res.status(202).json({ success: true, partialArticles: ArticlesByText1 });
