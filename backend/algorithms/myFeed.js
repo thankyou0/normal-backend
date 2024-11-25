@@ -66,6 +66,7 @@ const ByText1 = async (req, res) => {
 
     TextArray = (await getTextByCount(id));
 
+    return res.status(210).json({ message: TextArray });
 
     let ArticlesByText1 = (await ScrapForFeed(TextArray.slice(0, 2)));
 
