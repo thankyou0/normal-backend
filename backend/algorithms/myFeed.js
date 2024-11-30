@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import {searchLocation_model} from "../models/msearchLocation.js";
+import { searchLocation_model } from "../models/msearchLocation.js";
 import { ScrapForFeed } from "../algorithms/ScrapForFeed.js";
 
 const getTextByCount = async (id) => {
@@ -56,9 +56,34 @@ const getTextByCount = async (id) => {
 
 let TextArray = [];
 
+
+const ByText = async (req, res) => {
+
+
+  try {
+    const { id } = req.user;
+
+    const textId = req.params.textId;
+
+    if (textId == 0) {
+      TextArray = (await getTextByCount(id));
+    }
+
+    let firstelement = [];
+
+    firstelement.push(TextArray[textId]);
+
+    let ArticlesByText = (await ScrapForFeed(firstelement));
+    return res.status(202).json({ success: true, partialArticles: ArticlesByText });
+  } catch (error) {
+    console.error("Error fetching user feed:\n", error);
+    return res.status(210).json({ message: "Internal Server Error" });
+  }
+};
+
 const ByText1 = async (req, res) => {
   // console.log("ByText1");
-  
+
 
   try {
 
@@ -69,7 +94,7 @@ const ByText1 = async (req, res) => {
     // return res.status(210).json({ message: TextArray });
 
     // let ArticlesByText1 = (await ScrapForFeed(TextArray.slice(0, 2)));
-    let ArticlesByText1 = (await ScrapForFeed(['dhoni','kohli']));
+    let ArticlesByText1 = (await ScrapForFeed(['dhoni', 'kohli']));
 
 
     return res.status(202).json({ success: true, partialArticles: ArticlesByText1 });
@@ -137,4 +162,4 @@ const ByTopic2 = async (req, res) => {
 
 // module.exports = { ByText1, ByText2, ByTopic1, ByText3, ByText4, ByTopic2 };
 
-export { ByText1, ByText2, ByTopic1, ByText3, ByText4, ByTopic2 };
+export { ByText, ByText1, ByText2, ByTopic1, ByText3, ByText4, ByTopic2 };
