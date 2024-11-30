@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import { searchLocation_model } from "../models/msearchLocation.js";
 import { ScrapForFeed } from "../algorithms/ScrapForFeed.js";
+import { usermodel } from "../models/muser.js";
 
 const getTextByCount = async (id) => {
 
@@ -81,85 +82,56 @@ const ByText = async (req, res) => {
   }
 };
 
-const ByText1 = async (req, res) => {
-  // console.log("ByText1");
 
+let userTopics = [];
+
+
+const ByTopic = async (req, res) => {
 
   try {
 
     const { id } = req.user;
 
-    TextArray = (await getTextByCount(id));
+    const topicId = req.params.topicId;
 
-    // return res.status(210).json({ message: TextArray });
+    if (topicId == 0) {
 
-    // let ArticlesByText1 = (await ScrapForFeed(TextArray.slice(0, 2)));
-    let ArticlesByText1 = (await ScrapForFeed(['dhoni', 'kohli']));
+      const user = await usermodel.findById(id);
+
+      if (!user) {
+
+        return res.status(210).json({ message: "User not found" });
+      }
 
 
-    return res.status(202).json({ success: true, partialArticles: ArticlesByText1 });
+      let OneElementArray = [];
+      OneElementArray.push(user.topics[topicId]);
+
+
+      let ArticlesByTopic = (await ScrapForFeed(OneElementArray));
+
+      return res.status(202).json({ success: true, partialArticles: ArticlesByTopic });
+
+    } else {
+
+
+      let OneElementArray = [];
+
+      OneElementArray.push(userTopics[topicId]);
+
+      let ArticlesByTopic = (await ScrapForFeed(OneElementArray));
+
+      return res.status(202).json({ success: true, partialArticles: ArticlesByTopic });
+
+    }
+
   } catch (error) {
+
     console.error("Error fetching user feed:\n", error);
+
     return res.status(210).json({ message: "Internal Server Error" });
-  }
-};
 
-
-const ByText2 = async (req, res) => {
-
-
-  try {
-    let ArticlesByText2 = (await ScrapForFeed(TextArray.slice(2, 4)));
-    return res.status(202).json({ success: true, partialArticles: ArticlesByText2 });
-  }
-  catch (error) {
-    console.error("Error fetching user feed:\n", error);
-    return res.status(210).json({ message: "Internal Server Error" });
   }
 }
 
-
-const ByTopic1 = async (req, res) => {
-  return { success: true, partialArticles: [] };
-}
-
-
-const ByText3 = async (req, res) => {
-
-
-  try {
-    let ArticlesByText3 = (await ScrapForFeed(TextArray.slice(4, 6)));
-    return res.status(202).json({ success: true, partialArticles: ArticlesByText3 });
-  }
-  catch (error) {
-    console.error("Error fetching user feed:\n", error);
-    return res.status(210).json({ message: "Internal Server Error" });
-  }
-}
-
-
-const ByText4 = async (req, res) => {
-
-
-  try {
-    let ArticlesByText4 = (await ScrapForFeed(TextArray.slice(6, 8)));
-    return res.status(202).json({ success: true, partialArticles: ArticlesByText4 });
-  }
-  catch (error) {
-    console.error("Error fetching user feed:\n", error);
-    return res.status(210).json({ message: "Internal Server Error" });
-  }
-}
-
-
-
-
-
-const ByTopic2 = async (req, res) => {
-  return { success: true, partialArticles: [] };
-}
-
-
-// module.exports = { ByText1, ByText2, ByTopic1, ByText3, ByText4, ByTopic2 };
-
-export { ByText, ByText1, ByText2, ByTopic1, ByText3, ByText4, ByTopic2 };
+export { ByText, ByTopic };

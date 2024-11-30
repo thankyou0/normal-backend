@@ -53,6 +53,12 @@ const scanForLinks = async (page) => {
 const ScrapForFeed = async (SearchTexts) => {
 
 
+  // SearchTexts is array of only one element.
+
+  if (SearchTexts.length === 0) {
+    SearchTexts[0] = "news";
+  }
+
   try {
     const puppeteerOptions = {
       args: [...chromium.args, '--no-sandbox', '--disable-setuid-sandbox'],
