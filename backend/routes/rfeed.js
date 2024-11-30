@@ -3,7 +3,7 @@
 
 import express from "express";
 const router = express.Router();
-import { ByText, ByText1, ByText2, ByTopic, ByText3, ByText4, ByTopic2 } from "../algorithms/myFeed.js";
+import { ByText,ByTopic } from "../algorithms/myFeed.js";
 
 
 router.get("/getmyfeed/text/:textId", ByText);
