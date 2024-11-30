@@ -145,7 +145,7 @@ const Scrap = async ({ searchText, site, tbs, gl, location, page }) => {
     await cluster.idle();
     await cluster.close();
 
-    console.log(allArticles.length);
+    // console.log(allArticles.length);
 
     return allArticles;  // Return the collected articles
   } catch (error) {

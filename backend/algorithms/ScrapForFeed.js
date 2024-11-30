@@ -53,19 +53,22 @@ const scanForLinks = async (page, count) => {
 const ScrapForFeed = async (SearchTexts) => {
 
 
+  SearchTexts = SearchTexts.slice(0, 1); // Process only 2 search texts at a time
+
+
   try {
     const puppeteerOptions = {
-      args: [...chromium.args, '--no-sandbox', '--disable-setuid-sandbox', '--hide-scrollbars'],
-      defaultViewport: chromium.defaultViewport,
+      args: [...chromium.args, '--no-sandbox', '--disable-setuid-sandbox'],
+      // defaultViewport: chromium.defaultViewport,
       executablePath: await chromium.executablePath() || puppeteer.executablePath(),
-      headless: chromium.headless,
+      // headless: chromium.headless,
       ignoreDefaultArgs: chromium.ignoreDefaultArgs,
     };
 
     
     const cluster = await Cluster.launch({
       concurrency: Cluster.CONCURRENCY_PAGE,
-      maxConcurrency: 1,
+      maxConcurrency: 5,
       puppeteerOptions: puppeteerOptions,
     });
 
@@ -76,7 +79,7 @@ const ScrapForFeed = async (SearchTexts) => {
     let allArticles = [];  // Array to hold all articles
 
 
-    let articleCount = 10;   // means 10 10 9 9 8 8 7 7.  total 68 articles
+    let articleCount = 4;   // means 10 10 9 9 8 8 7 7.  total 68 articles
     let flag = 0;
 
     await cluster.task(async ({ page, data: url }) => {
