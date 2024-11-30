@@ -11,7 +11,7 @@ import chromium from "@sparticuz/chromium";
 
 
 
-const scanForLinks = async (page, count) => {
+const scanForLinks = async (page) => {
 
   const element = await page.$('div.SoaBEf');
   if (!element) {
@@ -47,13 +47,10 @@ const scanForLinks = async (page, count) => {
     });
   });
 
-  return articles.filter(article => article !== null).slice(0, count);
+  return articles.filter(article => article !== null);
 };
 
 const ScrapForFeed = async (SearchTexts) => {
-
-
-  SearchTexts = SearchTexts.slice(0, 1); // Process only 2 search texts at a time
 
 
   try {
@@ -65,7 +62,7 @@ const ScrapForFeed = async (SearchTexts) => {
       ignoreDefaultArgs: chromium.ignoreDefaultArgs,
     };
 
-    
+
     const cluster = await Cluster.launch({
       concurrency: Cluster.CONCURRENCY_PAGE,
       maxConcurrency: 5,
@@ -78,9 +75,6 @@ const ScrapForFeed = async (SearchTexts) => {
 
     let allArticles = [];  // Array to hold all articles
 
-
-    let articleCount = 5;   // means 10 10 9 9 8 8 7 7.  total 68 articles
-    let flag = 0;
 
     await cluster.task(async ({ page, data: url }) => {
 
@@ -106,19 +100,10 @@ const ScrapForFeed = async (SearchTexts) => {
       // const userAgent = randomUseragent.getRandom(); // Get a random user agent
       // await page.setUserAgent(userAgent); // Set the random user agent
       await page.goto(url, { waitUntil: "networkidle2" });
-      const articles = await scanForLinks(page, articleCount);
+      const articles = await scanForLinks(page);
       console.log(url, articles.length);
 
       allArticles = [...allArticles, ...articles];  // Collect articles from each page
-
-      if (flag === 0) {
-        articleCount = Math.max(articleCount, 1); // Decrease the count but ensure it doesn't go below 1
-        flag = 1;
-      }
-      else {
-        articleCount = Math.max(articleCount - 1, 1); // Decrease the count but ensure it doesn't go below 1
-        flag = 0;
-      }
 
     });
 
