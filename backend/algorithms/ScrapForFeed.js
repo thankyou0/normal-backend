@@ -53,7 +53,7 @@ const scanForLinks = async (page, count) => {
 const ScrapForFeed = async (SearchTexts) => {
 
 
-  // SearchTexts = SearchTexts.slice(0, 1); // Process only 2 search texts at a time
+  SearchTexts = SearchTexts.slice(0, 1); // Process only 2 search texts at a time
 
 
   try {
