@@ -28,4 +28,5 @@ const historyschema = new Schema({
 });
 
 const History = mongoose.model("History", historyschema);
+
 export {History};
