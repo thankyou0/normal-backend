@@ -27,6 +27,6 @@ const historyschema = new Schema({
     ]
 });
 
-const History = mongoose.model("History", historyschema);
+const history_model = mongoose.model("History", historyschema);
 
-export {History};
+export { history_model };
