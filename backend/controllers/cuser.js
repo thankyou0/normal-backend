@@ -76,7 +76,7 @@ const signUpPost = async (req, res) => {
     const userExist = await usermodel.findOne({ email, role });
 
     if (userExist) {
-      return res.status(210).json({ success: false, message: "User already exists for given role" });
+      return res.status(210).json({ success: false, message: "Email already exists for given role" });
     }
 
     const userNameExist = await usermodel.findOne({ username });
@@ -161,10 +161,18 @@ const updateUserProfile = async (req, res) => {
 
 
 const isUserExistWhenSignUp = async (req, res) => {
-  const { email, role } = req.body;
+  const {username, email, role } = req.body;
   const userExist = await usermodel.findOne({ email, role });
+
+  const userNameExist = await usermodel.findOne({ username });
+
+
+  if(userNameExist){
+    return res.status(210).json({ success: false, message: "Username already exists" });
+  }
+  
   if (userExist) {
-    return res.status(210).json({ success: false, message: "User already exists for given role" });
+    return res.status(210).json({ success: false, message: "Email already exists for given role" });
   }
   return res.status(202).json({ success: true, message: "User does not exist" });
 }
