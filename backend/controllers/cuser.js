@@ -76,8 +76,15 @@ const signUpPost = async (req, res) => {
     const userExist = await usermodel.findOne({ email, role });
 
     if (userExist) {
-      return res.status(210).json({ success: false, error: "User already exists for given role" });
+      return res.status(210).json({ success: false, message: "User already exists for given role" });
     }
+
+    const userNameExist = await usermodel.findOne({ username });
+
+    if (userNameExist) {
+      return res.status(210).json({ success: false, message: "Username already exists" });
+    }
+
 
     let cloudinaryURL = "";
     if (role === "PROVIDER") {
