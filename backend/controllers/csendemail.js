@@ -93,9 +93,9 @@
 // const verificationcodemodel = require('../models/mverificationcode');
 // const usermodel = require('../models/muser');
 
-import sendEmail from '../algorithms/SendEmail.js';
-import verificationcodemodel from '../models/mverificationcode.js';
-import usermodel from '../models/muser.js';
+import {sendEmail} from '../algorithms/SendEmail.js';
+import {verificationcodemodel} from '../models/mverificationcode.js';
+import {usermodel} from '../models/muser.js';
 import dotenv from 'dotenv';
 
 dotenv.config();

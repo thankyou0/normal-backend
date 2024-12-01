@@ -35,7 +35,7 @@ const logInPost = async (req, res) => {
     return res.status(210).json({ success: false, message: "All fields required" });
   }
 
-  console.log(req.body.email);
+  // console.log(req.body.email);
 
   const userExist = await usermodel.findOne({
     email, role

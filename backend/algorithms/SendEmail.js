@@ -166,4 +166,4 @@ async function sendEmail(username, email, code, CheckUserExist) {
 
 // module.exports = sendEmail;
 
-export default sendEmail;
+export {sendEmail};
