@@ -1,5 +1,5 @@
 // const history_model = require("../models/mhistory");
-import history_model from "../models/mhistory.js";
+import {history_model} from "../models/mhistory.js";
 
 const gethistory = async (req, res, next) => {
 
