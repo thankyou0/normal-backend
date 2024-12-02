@@ -5,5 +5,4 @@ const getQuiz = async (req, res, next) => {
   res.send(questions);
 };
 
-
 export { getQuiz };

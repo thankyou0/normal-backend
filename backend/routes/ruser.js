@@ -1,6 +1,7 @@
 import express from "express";
 const router = express.Router();
-import { logInPost, signUpPost, isUserExistWhenSignUp, getUserProfile, updateUserProfile } from "../controllers/cuser.js";
+import cuser from "../controllers/cuser.js";
+const { logInPost, signUpPost, isUserExistWhenSignUp, getUserProfile, updateUserProfile, UserRole } = cuser;
 import multer from "multer";
 import {checkAuth} from "../middleware/checkAuth.js";
 
@@ -28,5 +29,7 @@ router.get("/userprofile/get", checkAuth, getUserProfile);
 
 router.post("/userprofile/update", checkAuth, updateUserProfile);
 
+
+router.get("/getuserrole", checkAuth, UserRole);
 
 export {router};
