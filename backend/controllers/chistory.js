@@ -17,7 +17,7 @@ const gethistory = async (req, res, next) => {
 const removehistory = async (req, res, next) => {
     const user_id = req.user.id;
 
-    const { baseURL } = req.body();
+    const { baseURL } = req.body;
 
     let userHistory = await history_model.findOne({ userid: user_id });
 
