@@ -187,7 +187,7 @@ const isUserExistWhenSignUp = async (req, res) => {
 
 const UserRole = async (req, res) => {
   const user = await usermodel.findById(req.user.id);
-  return res.status(202).json({ success: true, role: user.role });
+  return res.status(202).json({ success: true, role: user?.role });
 }
 
 export default { logInPost, signUpPost, isUserExistWhenSignUp, getUserProfile, updateUserProfile, UserRole };
